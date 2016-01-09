@@ -1,22 +1,20 @@
-package org.androidtown.myframelayout;
+package org.androidtown.mylayoutinflater;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
-    ImageView imageView;
-    ImageView imageView2;
-
-    boolean selected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +31,20 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
 
-        imageView = (ImageView) findViewById(R.id.imageView);
-        imageView2 = (ImageView) findViewById(R.id.imageView2);
+    public void onButton1Clicked(View v){
 
-        Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        LinearLayout container = (LinearLayout) findViewById(R.id.container);
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater.inflate(R.layout.sub_layout, container, true);
+
+        Button button2 = (Button) container.findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selected) {
-                    imageView.setVisibility(View.VISIBLE);
-                    imageView2.setVisibility(View.GONE);
-                } else {
-                    imageView.setVisibility(View.GONE);
-                    imageView2.setVisibility(View.VISIBLE);
-                }
-
-                selected = !selected;
+                Toast.makeText(getApplicationContext(),"부분화면의버튼클릭",Toast.LENGTH_LONG).show();
             }
         });
     }

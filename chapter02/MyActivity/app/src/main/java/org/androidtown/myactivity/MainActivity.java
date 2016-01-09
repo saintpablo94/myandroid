@@ -1,5 +1,6 @@
-package org.androidtown.myframelayout;
+package org.androidtown.myactivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,15 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
-    ImageView imageView;
-    ImageView imageView2;
-
-    boolean selected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,25 +28,21 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
 
-        imageView = (ImageView) findViewById(R.id.imageView);
-        imageView2 = (ImageView) findViewById(R.id.imageView2);
+    public void onButton1Clicked(View v){
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        intent.putExtra("title","소녀시대");
+        startActivityForResult(intent, 1001);
+    }
 
-        Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selected) {
-                    imageView.setVisibility(View.VISIBLE);
-                    imageView2.setVisibility(View.GONE);
-                } else {
-                    imageView.setVisibility(View.GONE);
-                    imageView2.setVisibility(View.VISIBLE);
-                }
-
-                selected = !selected;
-            }
-        });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data !=null){
+            String name = data.getStringExtra("name");
+            Toast.makeText(getApplicationContext(),"전달받은 값 : "+name, Toast.LENGTH_LONG).show();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
