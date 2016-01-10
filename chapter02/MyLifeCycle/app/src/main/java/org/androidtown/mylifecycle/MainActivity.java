@@ -1,8 +1,7 @@
-package org.androidtown.myintent;
+package org.androidtown.mylifecycle;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.net.Uri;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,14 +10,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int ACTIVITY_MENU = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toast.makeText(MainActivity.this, "onCreate() 호출됨 : ", Toast.LENGTH_LONG).show();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -32,25 +34,53 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void onButton1Clicked(View v){
-//      Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:010-3722-2035"));
-//      startActivity(intent);
+    @Override
+    protected void onDestroy() {
+        Toast.makeText(MainActivity.this, "onDestroy() 호출됨 : ", Toast.LENGTH_LONG).show();
+        super.onDestroy();
+    }
 
-//      Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-//      startActivityForResult(intent, ACTIVITY_MENU);
+    @Override
+    protected void onStop() {
+        Toast.makeText(MainActivity.this, "onStop() 호출됨 : ", Toast.LENGTH_LONG).show();
+        super.onStop();
+    }
 
-        Intent intent = new Intent();
-        ComponentName name = new ComponentName(
-                "org.androidtown.myintent",
-                "org.androidtown.myintent.MenuActivity");
-        intent.setComponent(name);
-        intent.putExtra("title", "소녀시대");
-        intent.putExtra("age", 20);
-        
-        Person person01 = new Person("걸스데이", 21);
-        intent.putExtra("person", person01);
+    @Override
+    protected void onPause() {
+        Toast.makeText(MainActivity.this, "onPause() 호출됨 : ", Toast.LENGTH_LONG).show();
 
-        startActivityForResult(intent, ACTIVITY_MENU);
+        saveScore();
+
+        super.onPause();
+    }
+
+    private void saveScore() {
+        SharedPreferences preferences = getSharedPreferences("gostop",Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("score", 10000);
+        editor.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        Toast.makeText(MainActivity.this, "onResume() 호출됨 : ", Toast.LENGTH_LONG).show();
+
+        loadScore();
+
+        super.onResume();
+    }
+
+    private void loadScore() {
+        SharedPreferences preferences = getSharedPreferences("gostop", Activity.MODE_PRIVATE);
+        int score = preferences.getInt("score",0);
+        Toast.makeText(MainActivity.this, "읽어온 점수 : "+score, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onStart() {
+        Toast.makeText(MainActivity.this, "onStart() 호출됨 : ", Toast.LENGTH_LONG).show();
+        super.onStart();
     }
 
     @Override

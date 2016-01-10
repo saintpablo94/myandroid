@@ -1,11 +1,13 @@
 package org.androidtown.myintent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -24,6 +26,19 @@ public class MenuActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        Intent intent = getIntent();
+        if(intent != null){
+            String title = intent.getStringExtra("title");
+            int age = intent.getIntExtra("age", 0);
+            Person person01 = (Person) intent.getSerializableExtra("person");
+
+            Toast.makeText(MenuActivity.this,
+                    "title : "+title+
+                    " age : "+age+
+                    " person name"+ person01.getName()+
+                    " person age"+ person01.getAge(), Toast.LENGTH_LONG).show();
+        }
     }
 
 }
