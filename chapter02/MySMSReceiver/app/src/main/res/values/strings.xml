@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MySMSReceiver</string>
+    <string name="action_settings">Settings</string>
+</resources>
