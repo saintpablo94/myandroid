@@ -35,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onButton1Clicked(View v){
 
+        SubLayout layout = new SubLayout(this);
         LinearLayout container = (LinearLayout) findViewById(R.id.container);
+        container.addView(layout);
+
+        /*LinearLayout container = (LinearLayout) findViewById(R.id.container);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.sub_layout, container, true);
@@ -46,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"부분화면의버튼클릭",Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
     }
 
     @Override
