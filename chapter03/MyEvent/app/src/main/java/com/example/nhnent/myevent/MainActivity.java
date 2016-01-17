@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         detector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener(){
+
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                 textView.setText("onScroll() 호출됨 : " + distanceX + " , " + distanceY);
